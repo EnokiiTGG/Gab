@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      height: 100vh; 
+      margin: 0; 
+      background-color: #5e1ecb; 
+      color: white;
+      text-align: center;
+      animation: blink 1.5s infinite alternate;
+      position: relative;
+      overflow: hidden;
+    }
+    .quiz-container {
+      font-size: 72px;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+    }
+    .subtext {
+      font-size: 24px;
+      margin-top: 10px;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      100% { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-container" id="quiz-container">
+    He + Kr
+    <div class="subtext">This is the antidote, state the full name to GM</div>
+  </div>
+</body>
+</html>

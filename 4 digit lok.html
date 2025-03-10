@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Combination Lock</title>
+  <style>
+    body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background-color: #2c3e50; }
+    .lock-container { text-align: center; background-color: #34495e; padding: 20px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); width: 300px; }
+    .lock-status { width: 50px; height: 50px; margin: 0 auto 20px; border-radius: 50%; background-color: #e74c3c; display: flex; justify-content: center; align-items: center; font-size: 24px; color: #fff; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+    .combination { display: flex; justify-content: center; margin: 20px 0; }
+    .digit-wrapper { display: flex; flex-direction: column; align-items: center; margin: 0 5px; }
+    .digit-wrapper button { background: none; border: none; color: #ecf0f1; font-size: 24px; cursor: pointer; }
+    .digit-wrapper button:hover { color: #1abc9c; }
+    .digit { background-color: #2c3e50; color: #ecf0f1; font-size: 24px; font-weight: bold; width: 50px; height: 50px; border: 2px solid #1abc9c; border-radius: 5px; display: flex; justify-content: center; align-items: center; margin: 5px 0; }
+    .unlock-btn { background-color: #1abc9c; color: white; border: none; padding: 10px 20px; font-size: 16px; font-weight: bold; border-radius: 5px; cursor: pointer; margin: 10px; }
+    .unlock-btn:hover { background-color: #16a085; }
+  </style>
+</head>
+<body>
+  <div class="lock-container">
+    <div class="lock-status" id="lock-status">🔒</div>
+    <div class="combination">
+      <div class="digit-wrapper">
+        <button onclick="adjustDigit(0, 1)">&#x25B2;</button>
+        <div class="digit" id="digit-0">0</div>
+        <button onclick="adjustDigit(0, -1)">&#x25BC;</button>
+      </div>
+      <div class="digit-wrapper">
+        <button onclick="adjustDigit(1, 1)">&#x25B2;</button>
+        <div class="digit" id="digit-1">0</div>
+        <button onclick="adjustDigit(1, -1)">&#x25BC;</button>
+      </div>
+      <div class="digit-wrapper">
+        <button onclick="adjustDigit(2, 1)">&#x25B2;</button>
+        <div class="digit" id="digit-2">0</div>
+        <button onclick="adjustDigit(2, -1)">&#x25BC;</button>
+      </div>
+      <div class="digit-wrapper">
+        <button onclick="adjustDigit(3, 1)">&#x25B2;</button>
+        <div class="digit" id="digit-3">0</div>
+        <button onclick="adjustDigit(3, -1)">&#x25BC;</button>
+      </div>
+    </div>
+    <button class="unlock-btn" onclick="checkCombination()">Unlock</button>
+  </div>
+
+  <script>
+    function decodeCombination() {
+      const decoded = atob("MywyLDEsNA=="); // Decoding base64
+      console.log("Decoded base64:", decoded); // Debugging the decoded value
+      const parts = decoded.split(",").map(Number); // Convert to array of numbers
+      console.log("Parsed Combination:", parts); // Debugging parsed values
+      if (parts.length !== 4 || parts.some(isNaN)) {
+        console.error("Decoded combination is invalid!");
+        return [0, 0, 0, 0]; // Fallback if decoding fails
+      }
+      return parts;
+    }
+
+    const correctCombination = decodeCombination(); // Correct combination [3, 2, 1, 4]
+    console.log("Correct Combination:", correctCombination);
+
+    let currentCombination = [0, 0, 0, 0];
+
+    function adjustDigit(index, change) {
+      currentCombination[index] = (currentCombination[index] + change + 10) % 10;
+      document.getElementById(`digit-${index}`).textContent = currentCombination[index];
+    }
+
+    function checkCombination() {
+      console.log("Current Combination:", currentCombination); 
+      console.log("Correct Combination:", correctCombination); 
+
+      const isCorrect = currentCombination.every(
+        (digit, index) => digit === correctCombination[index]
+      );
+      console.log("Arrays are equal:", isCorrect);
+
+      if (isCorrect) {
+        document.getElementById("lock-status").textContent = "🔓";
+        document.getElementById("lock-status").style.backgroundColor = "#2ecc71";
+        window.location.href = "quiz.html";
+      } else {
+        alert("Incorrect combination. Try again.");
+      }
+    }
+  </script>
+</body>
+</html>
